@@ -4,68 +4,64 @@
 import React, { useState } from 'react';
 import { SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
+const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+
 const App = () => {
-    return (
-        <SafeAreaView style={styles.container}>
-            <Text style={styles.title}>Learn to Read Letters</Text>
-            <Alphabet />
-        </SafeAreaView>
-    );
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const showNextLetter = () => {
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % alphabet.length);
+  };
+
+  const showPreviousLetter = () => {
+    setCurrentIndex((prevIndex) => (prevIndex - 1 + alphabet.length) % alphabet.length);
+  };
+
+  return (
+    <SafeAreaView style={styles.container}>
+      <Text style={styles.title}>Learn to Read!</Text>
+      <View style={styles.letterContainer}>
+        <TouchableOpacity onPress={showPreviousLetter} style={styles.arrowButton}>
+          <Text style={styles.arrowText}>←</Text>
+        </TouchableOpacity>
+        <Text style={styles.letter}>{alphabet[currentIndex]}</Text>
+        <TouchableOpacity onPress={showNextLetter} style={styles.arrowButton}>
+          <Text style={styles.arrowText}>→</Text>
+        </TouchableOpacity>
+      </View>
+    </SafeAreaView>
+  );
 };
-
-const Alphabet = () => {
-    const [currentLetter, setCurrentLetter] = useState(0);
-
-    const nextLetter = () => {
-        setCurrentLetter((prev) => (prev < letters.length - 1 ? prev + 1 : 0));
-    };
-
-    return (
-        <View style={alphabetStyles.container}>
-            <Text style={alphabetStyles.letter}>{letters[currentLetter]}</Text>
-            <TouchableOpacity style={alphabetStyles.button} onPress={nextLetter}>
-                <Text style={alphabetStyles.buttonText}>Next</Text>
-            </TouchableOpacity>
-        </View>
-    );
-};
-
-const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    title: {
-        fontSize: 24,
-        fontWeight: 'bold',
-        marginVertical: 20,
-    },
-});
-
-const alphabetStyles = StyleSheet.create({
-    container: {
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    letter: {
-        fontSize: 100,
-        fontWeight: 'bold',
-        marginVertical: 20,
-    },
-    button: {
-        backgroundColor: '#007BFF',
-        paddingVertical: 10,
-        paddingHorizontal: 30,
-        borderRadius: 5,
-    },
-    buttonText: {
-        color: '#fff',
-        fontSize: 20,
-    },
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#F5F5F5',
+  },
+  title: {
+    fontSize: 32,
+    fontWeight: 'bold',
+    marginBottom: 20,
+  },
+  letterContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  arrowButton: {
+    padding: 20,
+  },
+  arrowText: {
+    fontSize: 48,
+    color: '#FF6347',
+  },
+  letter: {
+    fontSize: 120,
+    fontWeight: 'bold',
+    color: '#333333',
+    marginHorizontal: 20,
+  },
 });
 
 export default App;
