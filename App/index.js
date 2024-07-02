@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
         marginVertical: 20,
     },
     letter: {
-        fontSize: 100,
+        fontSize: 150,
         fontWeight: 'bold',
         color: '#333',
     },
